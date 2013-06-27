@@ -11,10 +11,10 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            var model = Consumer<Coderbits>.ConsumeNow("https://coderbits.com/thabo.json");
+            var model = Consumer<Coderbits>.Consume("https://coderbits.com/thabo.json");
             Console.WriteLine(model.views);
 
-            var dynamicModel = Consumer<dynamic>.ConsumeNow("https://coderbits.com/thabo.json");
+            var dynamicModel = Consumer<dynamic>.Consume("https://coderbits.com/thabo.json");
             Console.WriteLine(dynamicModel.views);
 
             Console.Read();

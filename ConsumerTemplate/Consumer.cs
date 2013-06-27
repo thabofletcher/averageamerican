@@ -14,7 +14,7 @@ namespace AverageAmerican
         /// Asynchronously request the JSON resource at the specified path
         /// </summary>
         /// <param name="path">The URI of the resource being requested</param>
-        public static async Task<T> Consume(string path)
+        public static async Task<T> ConsumeAsync(string path)
         {
             //Create HttpClient for making request for profile
             var client = new HttpClient();
@@ -33,9 +33,9 @@ namespace AverageAmerican
         /// Synchronously request the JSON resource at the specified path
         /// </summary>
         /// <param name="path">The URI of the resource being requested</param>
-        public static T ConsumeNow(string path)
+        public static T Consume(string path)
         {
-            return Consume(path).Result;
+            return ConsumeAsync(path).Result;
         }
     }
 }
