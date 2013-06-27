@@ -5,13 +5,13 @@ C# client for anything JSON
 
 ## Usage
 
-Consumer<<Type>>.ConsumeNow(URL);
+Consumer\<Type\>.ConsumeNow(URL);
 
 ##License
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Thabo Fletchers
+Copyright (c) 2013 Thabo Fletcher
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
