@@ -13,6 +13,10 @@ namespace Demo
         {
             var model = Consumer<Coderbits>.ConsumeNow("https://coderbits.com/thabo.json");
             Console.WriteLine(model.views);
+
+            var dynamicModel = Consumer<dynamic>.ConsumeNow("https://coderbits.com/thabo.json");
+            Console.WriteLine(dynamicModel.views);
+
             Console.Read();
         }
     }
