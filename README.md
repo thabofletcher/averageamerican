@@ -1,37 +1,11 @@
-﻿CSharp.IPInfoDB
+﻿Average American Consumer
 ================
 
-C# client for the [IP Info DB API](http://ipinfodb.com/)
+C# client for anything JSON
 
 ## Usage
 
-### Add using statement
-
-    using CSharp.IPInfoDB;
-
-### Create the object
-
-    var consumer = new ApiConsumer(yourKey);
-
-### Retrieve a location for an ip
-
-    var locationModel = consumer.GetLocation("8.8.8.8");
-
-### Retrieve a profile async
-
-    var locationTask = consumer.GetLocationAsync("8.8.8.8");
-
-    //Do work
-
-    var locationModel = lcoationTask.Result;
-
-### Access profile members
-
-    Console.WriteLine(locationModel.cityName);
-
-## Resources
-
-- NuGet package can be found here: TODO
+Consumer<Type>.ConsumeNow(URL);
 
 ##License
 
