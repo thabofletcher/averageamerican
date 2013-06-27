@@ -5,7 +5,7 @@ C# client for anything JSON
 
 ## Usage
 
-Consumer<Type>.ConsumeNow(URL);
+Consumer<<Type>>.ConsumeNow(URL);
 
 ##License
 
