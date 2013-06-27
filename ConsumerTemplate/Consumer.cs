@@ -10,6 +10,10 @@ namespace AverageAmerican
 {
     public class Consumer<T>
     {
+        /// <summary>
+        /// Asynchronously request the JSON resource at the specified path
+        /// </summary>
+        /// <param name="path">The URI of the resource being requested</param>
         public static async Task<T> Consume(string path)
         {
             //Create HttpClient for making request for profile
@@ -19,12 +23,16 @@ namespace AverageAmerican
             var jsonString = await client.GetStringAsync(path).ConfigureAwait(continueOnCapturedContext: false);
 
             //Convert JSON string to model
-            T model = await JsonConvert.DeserializeObjectAsync<T>(jsonString);;
+            T model = await JsonConvert.DeserializeObjectAsync<T>(jsonString);
 
             //Return the model
             return model;
         }
 
+        /// <summary>
+        /// Synchronously request the JSON resource at the specified path
+        /// </summary>
+        /// <param name="path">The URI of the resource being requested</param>
         public static T ConsumeNow(string path)
         {
             return Consume(path).Result;
