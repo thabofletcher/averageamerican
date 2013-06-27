@@ -5,7 +5,7 @@ C# client for anything JSON
 
 ## Usage
 
-Consumer\<Type\>.ConsumeNow(URL);
+	var model = Consumer<Coderbits>.ConsumeNow("https://coderbits.com/thabo.json");
 
 ##License
 
