@@ -5,7 +5,8 @@ C# client for anything JSON
 
 ## Usage
 
-	var model = Consumer<T>.ConsumeNow(Url);
+	var model = new Consumer<T>().Consume(Url);
+	var dynamicModel = new Dynamo().Consume(Url);
 
 ##License
 
