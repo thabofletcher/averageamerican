@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace AverageAmerican
 {
@@ -20,6 +21,11 @@ namespace AverageAmerican
         public Consumer(string username = null, string password = null)
         {
             _BasicAuthHeaderValue = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
+        }
+
+        public void IgnoreCertErrors()
+        {
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
         /// <summary>
