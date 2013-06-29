@@ -8,16 +8,31 @@ using Newtonsoft.Json;
 
 namespace AverageAmerican
 {
+    public class Dynamo : Consumer<dynamic> 
+    {
+        public Dynamo(string username = null, string password = null) : base(username, password) { }
+    }
+
     public class Consumer<T>
     {
+        private string _BasicAuthHeaderValue = null;
+
+        public Consumer(string username = null, string password = null)
+        {
+            _BasicAuthHeaderValue = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
+        }
+
         /// <summary>
         /// Asynchronously request the JSON resource at the specified path
         /// </summary>
         /// <param name="path">The URI of the resource being requested</param>
-        public static async Task<T> ConsumeAsync(string path)
+        public async Task<T> ConsumeAsync(string path)
         {
             //Create HttpClient for making request for profile
             var client = new HttpClient();
+
+            if (_BasicAuthHeaderValue != null)
+                client.DefaultRequestHeaders.Add("Authorization", _BasicAuthHeaderValue);
 
             //Get response as a JSON string
             var jsonString = await client.GetStringAsync(path).ConfigureAwait(continueOnCapturedContext: false);
@@ -33,7 +48,7 @@ namespace AverageAmerican
         /// Synchronously request the JSON resource at the specified path
         /// </summary>
         /// <param name="path">The URI of the resource being requested</param>
-        public static T Consume(string path)
+        public T Consume(string path)
         {
             return ConsumeAsync(path).Result;
         }
