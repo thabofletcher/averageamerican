@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace AverageAmerican
 {
-    public class Dynamo : Consumer<dynamic> 
+    public class Dynamo : Consumer<dynamic>
     {
         public Dynamo(string username = null, string password = null) : base(username, password) { }
     }
@@ -33,6 +33,8 @@ namespace AverageAmerican
 
             if (_BasicAuthHeaderValue != null)
                 client.DefaultRequestHeaders.Add("Authorization", _BasicAuthHeaderValue);
+
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
 
             //Get response as a JSON string
             var jsonString = await client.GetStringAsync(path).ConfigureAwait(continueOnCapturedContext: false);
