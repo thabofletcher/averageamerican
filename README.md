@@ -7,6 +7,11 @@ C# client for anything JSON
 
 	var model = new Consumer<T>().Consume(Url);
 	var dynamicModel = new Dynamo().Consume(Url);
+	
+## [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console) Installation
+
+	PM> Install-Package ConsumerTemplate
+
 
 ##License
 
