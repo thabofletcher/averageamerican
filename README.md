@@ -11,7 +11,15 @@ C# client for anything JSON
 ## [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console) Installation
 
 	PM> Install-Package ConsumerTemplate
+	
+## Details/More Info
 
+	using AverageAmerican;
+	
+	var basicAuthConsumer = new Dynamo(username, password);
+	
+	// only do this for a proof of concept, MITM attacks against your application aren't fun
+	basicAuthConsumer.IgnoreCertErrors(); 
 
 ##License
 
