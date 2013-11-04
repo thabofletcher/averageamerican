@@ -11,10 +11,10 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            var model = new Consumer().Consume<Coderbits>("https://coderbits.com/thabo.json");
+            var model = new Consumer().Consume<Coderbits>("https://coderbits.com/thabo.json").Result;
             Console.WriteLine(model.views);
 
-            var dynamicModel = new Dynamo().Consume("https://coderbits.com/thabo.json");
+            var dynamicModel = new Dynamo().Consume("https://coderbits.com/thabo.json").Result;
             Console.WriteLine(dynamicModel.views);
 
             //var testBasicAuth = new Dynamo("user1", "user1").Consume("http://test.webdav.org/auth-basic/");

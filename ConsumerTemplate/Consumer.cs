@@ -13,14 +13,9 @@ namespace AverageAmerican
     {
         public Dynamo(string username = null, string password = null) : base(username, password) { }
 
-        public new async Task<dynamic> ConsumeAsync(string path)
+        public new async Task<dynamic> Consume(string path)
         {
-            return await base.ConsumeAsync<dynamic>(path);
-        }
-
-        public dynamic Consume(string path)
-        {
-            return ConsumeAsync(path).Result;
+            return await base.Consume<dynamic>(path);
         }
     }
 
@@ -42,7 +37,7 @@ namespace AverageAmerican
         /// Asynchronously request the JSON resource at the specified path
         /// </summary>
         /// <param name="path">The URI of the resource being requested</param>
-        public async Task<T> ConsumeAsync<T>(string path)
+        public async Task<T> Consume<T>(string path)
         {
             //Create HttpClient for making request for profile
             var client = new HttpClient();
@@ -60,15 +55,6 @@ namespace AverageAmerican
 
             //Return the model
             return model;
-        }
-
-        /// <summary>
-        /// Synchronously request the JSON resource at the specified path
-        /// </summary>
-        /// <param name="path">The URI of the resource being requested</param>
-        public T Consume<T>(string path)
-        {
-            return ConsumeAsync<T>(path).Result;
         }
     }
 }
