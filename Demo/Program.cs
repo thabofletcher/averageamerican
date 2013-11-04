@@ -11,7 +11,7 @@ namespace Demo
     {
         static void Main(string[] args)
         {
-            var model = new Consumer<Coderbits>().Consume("https://coderbits.com/thabo.json");
+            var model = new Consumer().Consume<Coderbits>("https://coderbits.com/thabo.json");
             Console.WriteLine(model.views);
 
             var dynamicModel = new Dynamo().Consume("https://coderbits.com/thabo.json");

@@ -9,12 +9,22 @@ using System.Net;
 
 namespace AverageAmerican
 {
-    public class Dynamo : Consumer<dynamic>
+    public class Dynamo : Consumer
     {
         public Dynamo(string username = null, string password = null) : base(username, password) { }
+
+        public new async Task<dynamic> ConsumeAsync(string path)
+        {
+            return await base.ConsumeAsync<dynamic>(path);
+        }
+
+        public dynamic Consume(string path)
+        {
+            return ConsumeAsync(path).Result;
+        }
     }
 
-    public class Consumer<T>
+    public class Consumer
     {
         private string _BasicAuthHeaderValue = null;
 
@@ -32,7 +42,7 @@ namespace AverageAmerican
         /// Asynchronously request the JSON resource at the specified path
         /// </summary>
         /// <param name="path">The URI of the resource being requested</param>
-        public async Task<T> ConsumeAsync(string path)
+        public async Task<T> ConsumeAsync<T>(string path)
         {
             //Create HttpClient for making request for profile
             var client = new HttpClient();
@@ -56,9 +66,9 @@ namespace AverageAmerican
         /// Synchronously request the JSON resource at the specified path
         /// </summary>
         /// <param name="path">The URI of the resource being requested</param>
-        public T Consume(string path)
+        public T Consume<T>(string path)
         {
-            return ConsumeAsync(path).Result;
+            return ConsumeAsync<T>(path).Result;
         }
     }
 }
