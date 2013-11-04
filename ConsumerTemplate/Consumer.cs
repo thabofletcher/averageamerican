@@ -13,7 +13,7 @@ namespace AverageAmerican
     {
         public Dynamo(string username = null, string password = null) : base(username, password) { }
 
-        public new async Task<dynamic> Consume(string path)
+        public async Task<dynamic> Consume(string path)
         {
             return await base.Consume<dynamic>(path);
         }
@@ -33,11 +33,7 @@ namespace AverageAmerican
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
-        /// <summary>
-        /// Asynchronously request the JSON resource at the specified path
-        /// </summary>
-        /// <param name="path">The URI of the resource being requested</param>
-        public async Task<T> Consume<T>(string path)
+        private HttpClient ClientFactory()
         {
             //Create HttpClient for making request for profile
             var client = new HttpClient();
@@ -46,15 +42,52 @@ namespace AverageAmerican
                 client.DefaultRequestHeaders.Add("Authorization", _BasicAuthHeaderValue);
 
             client.DefaultRequestHeaders.Add("Accept", "application/json");
+            return client;
+        }
 
+        /// <summary>
+        /// Asynchronously request (GET) the JSON resource at the specified path
+        /// </summary>
+        /// <param name="path">The URI of the resource being requested</param>
+        public async Task<T> Consume<T>(string path)
+        {
             //Get response as a JSON string
-            var jsonString = await client.GetStringAsync(path).ConfigureAwait(continueOnCapturedContext: false);
+            var jsonString = await ClientFactory().GetStringAsync(path).ConfigureAwait(continueOnCapturedContext: false);
 
-            //Convert JSON string to model
-            T model = await JsonConvert.DeserializeObjectAsync<T>(jsonString);
+            // convert JSON string to model and return the model
+            return await JsonConvert.DeserializeObjectAsync<T>(jsonString);
+        }
 
-            //Return the model
-            return model;
+        /// <summary>
+        /// DELETE a resource
+        /// </summary>
+        /// <param name="path">API path with resource identifier</param>
+        /// <returns>http response code</returns>
+        public async Task<HttpResponseMessage> Destroy(string path)
+        {
+            return await ClientFactory().DeleteAsync(path).ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// PUT a resource
+        /// </summary>
+        /// <param name="path">API path</param>
+        /// <param name="newData">The data to associate with the new resource being created</param>
+        /// <returns>http response code</returns>
+        public async Task<HttpResponseMessage> Manipulate<TData>(string path, TData newData)
+        {
+            return await ClientFactory().PutAsJsonAsync<TData>(path, newData).ConfigureAwait(continueOnCapturedContext: false);
+        }
+
+        /// <summary>
+        /// POST a resource
+        /// </summary>
+        /// <param name="path">API path with resource identifier</param>
+        /// <param name="newData">The data to associate with the new resource being updated</param>
+        /// <returns>http response code</returns>
+        public async Task<HttpResponseMessage> Create<TData>(string path, TData updateData)
+        {
+            return await ClientFactory().PostAsJsonAsync<TData>(path, updateData).ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }
