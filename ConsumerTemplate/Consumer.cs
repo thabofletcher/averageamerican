@@ -42,6 +42,7 @@ namespace AverageAmerican
                 client.DefaultRequestHeaders.Add("Authorization", _BasicAuthHeaderValue);
 
             client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
             return client;
         }
 
