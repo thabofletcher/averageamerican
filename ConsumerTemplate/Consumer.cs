@@ -86,7 +86,7 @@ namespace AverageAmerican
         /// <param name="path">API path with resource identifier</param>
         /// <param name="newData">The data to associate with the new resource being updated</param>
         /// <returns>http response code</returns>
-        public async Task<HttpResponseMessage> Create<TData>(string path, TData updateData)
+        public async Task<HttpResponseMessage> Produce<TData>(string path, TData updateData)
         {
             return await ClientFactory().PostAsJsonAsync<TData>(path, updateData).ConfigureAwait(continueOnCapturedContext: false);
         }
