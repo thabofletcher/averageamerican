@@ -33,7 +33,7 @@ namespace AverageAmerican
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         }
 
-        private HttpClient ClientFactory()
+        private HttpClient ClientFactory(bool data = false)
         {
             //Create HttpClient for making request for profile
             var client = new HttpClient();
@@ -42,7 +42,8 @@ namespace AverageAmerican
                 client.DefaultRequestHeaders.Add("Authorization", _BasicAuthHeaderValue);
 
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            if (data)
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
             return client;
         }
 
@@ -77,7 +78,7 @@ namespace AverageAmerican
         /// <returns>http response code</returns>
         public async Task<HttpResponseMessage> Manipulate<TData>(string path, TData newData)
         {
-            return await ClientFactory().PutAsJsonAsync<TData>(path, newData).ConfigureAwait(continueOnCapturedContext: false);
+            return await ClientFactory(true).PutAsJsonAsync<TData>(path, newData).ConfigureAwait(continueOnCapturedContext: false);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace AverageAmerican
         /// <returns>http response code</returns>
         public async Task<HttpResponseMessage> Produce<TData>(string path, TData updateData)
         {
-            return await ClientFactory().PostAsJsonAsync<TData>(path, updateData).ConfigureAwait(continueOnCapturedContext: false);
+            return await ClientFactory(true).PostAsJsonAsync<TData>(path, updateData).ConfigureAwait(continueOnCapturedContext: false);
         }
     }
 }
